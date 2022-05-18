@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>框选checkbox</title>
+    <style>
+        #box{
+            width: 200px;
+            padding: 100px;
+            height:100px;
+            margin: 100px auto;
+            background-color: antiquewhite;
+            text-align: center;
+        }
+        #box2{
+            border: 0px black dotted;
+            position: absolute;
+        }
+    </style>
+</head>
+<script>
+    window.onload=()=>{
+        //鼠标点击距离，鼠标松开距离,鼠标移动x距离，鼠标移动y距离
+        let x1,y1,x2,y2,rectWidth,rectHeight
+        const box=document.getElementById('box')
+        const box2=document.getElementById('box2')
+        box.onmousedown=(event)=>{
+            x1=event.pageX
+            y1=event.pageY
+            box2.style.left=x1+'px'
+            box2.style.top=y1+'px'
+            box2.style.borderWidth=1+'px'
+        }
+        box.onmousemove=(event)=>{
+            if(x1){
+            x2=event.pageX
+            y2=event.pageY
+            if(x2-x1<0){
+                box2.style.left=x2+'px'
+            }
+            if(y2-y1<0){
+                box2.style.top=y2+'px'
+            }
+            rectWidth=Math.abs(x2-x1)
+            rectHeight=Math.abs(y2-y1)
+            box2.style.width=rectWidth+'px'
+            box2.style.height=rectHeight+'px'
+            for (let i =1; i <  box.children.length; i++) {
+                    const a =  box.children[i];
+                    if(a.offsetLeft>x1 &&a.offsetTop>y1 &&a.offsetLeft<x2 &&a.offsetTop<y2 && x2>x1){
+                        a.checked=true
+                    }else if(a.offsetLeft>x2 && a.offsetTop>y2 &&a.offsetLeft<x1&& a.offsetTop<y1 && x1>x2){
+                        a.checked=true
+                    }else if(a.offsetLeft>x1 &&a.offsetTop<y1 &&a.offsetLeft<x2 &&a.offsetTop>y2 && x2>x1){
+                        a.checked=true
+                    }
+                    else if(a.offsetLeft>x2 && a.offsetTop<y2 &&a.offsetLeft<x1&& a.offsetTop>y1 && x1>x2){
+                        a.checked=true
+                    }
+                    else{
+                        a.checked=false
+                    }
+            }
+        }
+        }
+        box.onmouseup=(event)=>{
+            //重置x1,y1
+            x1=null
+            y1=null
+            box2.removeAttribute('style')
+        }
+    }
+</script>
+<body>
+    <div id="box" >
+        <div id="box2"></div>
+        <input type="checkbox" name="f"  value="1">
+        <input type="checkbox" name="f"  value="2">
+        <input type="checkbox" name="f"  value="3">
+        <input type="checkbox" name="f"  value="4">
+        <input type="checkbox" name="f"  value="5">
+        <input type="checkbox" name="f"  value="6">
+        <input type="checkbox" name="f"  value="7">
+        <input type="checkbox" name="f"  value="8">
+        <input type="checkbox" name="f"  value="9">
+        <input type="checkbox" name="f"  value="10">
+        <input type="checkbox" name="f"  value="11">
+        <input type="checkbox" name="f"  value="12">
+        <input type="checkbox" name="f"  value="13">
+        <input type="checkbox" name="f"  value="14">
+        <input type="checkbox" name="f"  value="15">
+    </div>
+</body>
+</html>
